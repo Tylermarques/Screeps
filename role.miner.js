@@ -4,7 +4,7 @@ var roleMiner = {
     run: function(creep) {
 
         if (creep.carry.energy < creep.carryCapacity) {
-            var energy = creep.pos.findInRange(FIND_DROPPED_ENERGY, 1 );
+            var energy = creep.pos.findInRange(FIND_DROPPED_RESOURCES, 1 );
             //console.log(energy)
             if (energy.length) {
                 creep.say('Collecting dropped resource');

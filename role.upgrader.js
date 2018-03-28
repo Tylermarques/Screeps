@@ -18,7 +18,7 @@ var roleUpgrader = {
             }
         }
         else {
-            var energy = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY, 1);
+            var energy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, 1);
             if (energy) {
                 if (creep.pickup(energy) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(energy)

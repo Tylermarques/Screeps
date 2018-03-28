@@ -1,6 +1,4 @@
-/**
- * Created by Tyler on 2016-12-11.
- */
+
 
 var roleTruck = require('role.truck');
 
@@ -18,35 +16,39 @@ module.exports = {
         }
         if(creep.memory.unloading && creep.carry.energy == 0) {
             creep.memory.unloading = false;
-            creep.say('harvesting');
+            creep.say('Picking Up');
         }
         if(!creep.memory.unloading && creep.carry.energy == creep.carryCapacity) {
             creep.memory.unloading = true;
-            creep.say('unloading');
+            creep.say('Unloading');
         }
+
         if(!creep.memory.unloading) {
-            if (creep.room.name == creep.memory.home) {
+            // Picking up energy
+            if (creep.room.name === creep.memory.home) {
+
                 let exit = creep.room.findExitTo(creep.memory.target);
                 creep.moveTo(creep.pos.findClosestByPath(exit));
             } else {
-                var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+
+                let source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
                 if (source && creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(source);
                 }
             }
         }
         else {
-            if (creep.room.name == creep.memory.target) {
+            if (creep.room.name === creep.memory.target) {
                 creep.moveTo(Game.spawns.Spawn1);
             } else {
 
                 var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                        filter: (structure) => {
+                    filter: (structure) => {
                         return (((structure.structureType == STRUCTURE_EXTENSION ||
-                    structure.structureType == STRUCTURE_SPAWN ||
-                    structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity) ||
-                        (structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER)&& structure.store[RESOURCE_ENERGY] < structure.storeCapacity)
-                        }
+                            structure.structureType == STRUCTURE_SPAWN ||
+                            structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity) ||
+                            (structure.structureType == STRUCTURE_STORAGE || structure.structureType == STRUCTURE_CONTAINER)&& structure.store[RESOURCE_ENERGY] < structure.storeCapacity)
+                    }
                 });
             }
             if(target) {

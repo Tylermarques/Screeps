@@ -14,13 +14,13 @@ var roleTruck = {
             creep.say('Collecting dropped resource');
         }
         if(creep.memory.retreiving) {
-            var tombstone = creep.pos.findClosestByPath(FIND_TOMBSTONES)
+            var tombstone = creep.pos.findClosestByPath(FIND_TOMBSTONES);
             if (tombstone !== null) {
-                if (creep.pickup(tombstone) == ERR_NOT_IN_RANGE) {
+                if (creep.withdraw(tombstone, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(tombstone)
                 }
             }
-            var energy = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY, 1 );
+            var energy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES, 1 );
             if (energy !== null) {
                 if (creep.pickup(energy) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(energy)
