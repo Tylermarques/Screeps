@@ -6,6 +6,9 @@ var roleHarvester = {
         if (creep.memory.harvesting === undefined) {
             creep.memory.harvesting = true;
         }
+        if (!creep.memory.source_id || creep.memory.source_id === 0) {
+            creep.memory.source_id = creep.pos.findClosestByPath(FIND_SOURCES).id
+        }
         if (creep.memory.harvesting &&  creep.carry.energy === creep.carryCapacity) {
             creep.memory.harvesting = false;
             creep.say('Dropping')
@@ -15,9 +18,11 @@ var roleHarvester = {
             creep.say('Harvesting');
         }
         if (creep.memory.harvesting) {
-            let source = creep.room.find(FIND_SOURCES);
-            if (source[creep.memory.source] && creep.harvest(source[creep.memory.source]) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(source[creep.memory.source])
+            let source = Game.getObjectById(creep.memory.source_id);
+            console.log(source.pos);
+            if (creep.harvest(source) < 0) {
+                creep.say('moving');
+                creep.moveTo(source)
             }
             return;
         }
